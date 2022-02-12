@@ -15,7 +15,7 @@ __Table of Contents__
 
 Global find and replace:
 
-`ElectronHolochainTemplate`: replace with the actual name you wish to see appear in users desktop launcher icons: e.g. "Acorn"
+`LocalWiki`: replace with the actual name you wish to see appear in users desktop launcher icons: e.g. "Acorn"
 
 `com.some-domain-name.app-name`: replace with an Apple ["bundle Id"](https://developer.apple.com/documentation/appstoreconnectapi/bundle_ids) that is registered on your Apple Developer account
 

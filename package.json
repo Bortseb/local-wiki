@@ -1,5 +1,5 @@
 {
-  "name": "electron-holochain-template",
+  "name": "local-wiki",
   "version": "0.0.1",
   "description": "This repository helps get started with electron and holochain",
   "repository": {
