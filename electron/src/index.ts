@@ -21,7 +21,7 @@ const MAIN_FILE = path.join(__dirname, '../web/index.html')
 //   '../web/logo/acorn-logo-desktop-512px.png'
 // )
 
-const DEVELOPMENT_UI_URL = 'http://localhost:3000'
+const UI_URL = 'http://localhost:3400'
 
 const createMainWindow = (): BrowserWindow => {
   // Create the browser window.
@@ -41,13 +41,8 @@ const createMainWindow = (): BrowserWindow => {
   //   options.icon = LINUX_ICON_FILE
   // }
   const mainWindow = new BrowserWindow(options)
-  // and load the index.html of the app.
-  if (app.isPackaged) {
-    mainWindow.loadFile(MAIN_FILE)
-  } else {
-    // development
-    mainWindow.loadURL(DEVELOPMENT_UI_URL)
-  }
+  mainWindow.loadURL(UI_URL)
+
   // Open <a href='' target='_blank'> with default system browser
   mainWindow.webContents.on('new-window', function (event, url) {
     event.preventDefault()
@@ -66,14 +61,18 @@ const createMainWindow = (): BrowserWindow => {
 app.on('ready', async () => {
   // start up the wiki-server
 
+  // The directory for storing your app's data and config files,
+  // which by default it is the appData directory appended with your app's name.
+  const userDataPath = app.getPath('userData')
+
   // define config
   let config = {
-      port: 3000,
+      port: 3400,
       root: path.dirname(require.resolve('wiki-server')),
       home: 'welcome-visitors',
-      security_type: './security',
+      // security_type: './security',
       security_legacy: true,
-      data: app.getAppPath(),
+      data: userDataPath,
       packageDir: path.resolve(path.join(__dirname, '..', 'node_modules')),
       cookieSecret: require('crypto').randomBytes(64).toString('hex'),
   }
