@@ -1,17 +1,11 @@
 import { app, BrowserWindow, shell } from 'electron'
 import * as path from 'path'
-// import log from 'electron-log'
-import initAgent, {
-  StateSignal,
-  STATUS_EVENT,
-} from 'electron-holochain'
 
-import {
-  devOptions,
-  prodOptions,
-  stateSignalToText,
-  BINARY_PATHS,
-} from './holochain'
+import * as http from 'http'
+// import wiki-server
+import * as server from 'wiki-server'
+
+// import log from 'electron-log'
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 // if (require('electron-squirrel-startup')) {
@@ -22,15 +16,12 @@ import {
 const BACKGROUND_COLOR = '#fbf9f7'
 
 const MAIN_FILE = path.join(__dirname, '../web/index.html')
-const SPLASH_FILE = path.join(__dirname, '../web/splashscreen.html')
 // const LINUX_ICON_FILE = path.join(
 //   __dirname,
 //   '../web/logo/acorn-logo-desktop-512px.png'
 // )
 
-const DEVELOPMENT_UI_URL = process.env.EH_TEST_USER_2
-  ? 'http://localhost:8081'
-  : 'http://localhost:8080'
+const DEVELOPMENT_UI_URL = 'http://localhost:3000'
 
 const createMainWindow = (): BrowserWindow => {
   // Create the browser window.
@@ -43,7 +34,7 @@ const createMainWindow = (): BrowserWindow => {
     // can check paths
     webPreferences: {
       contextIsolation: false,
-      nodeIntegration: true,
+      nodeIntegration: false,
     },
   }
   // if (process.platform === 'linux') {
@@ -69,61 +60,34 @@ const createMainWindow = (): BrowserWindow => {
   return mainWindow
 }
 
-const createSplashWindow = (): BrowserWindow => {
-  // Create the browser window.
-  const splashWindow = new BrowserWindow({
-    height: 450,
-    width: 800,
-    center: true,
-    resizable: false,
-    frame: false,
-    show: false,
-    backgroundColor: BACKGROUND_COLOR,
-    // use these settings so that the ui
-    // can listen for status change events
-    webPreferences: {
-      contextIsolation: false,
-      nodeIntegration: true,
-    },
-  })
-
-  // and load the splashscreen.html of the app.
-  if (app.isPackaged) {
-    splashWindow.loadFile(SPLASH_FILE)
-  } else {
-    // development
-    splashWindow.loadURL(`${DEVELOPMENT_UI_URL}/splashscreen.html`)
-  }
-  // once its ready to show, show
-  splashWindow.once('ready-to-show', () => {
-    splashWindow.show()
-  })
-
-  // Open the DevTools.
-  // mainWindow.webContents.openDevTools();
-  return splashWindow
-}
-
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.on('ready', async () => {
-  const splashWindow = createSplashWindow()
-  const opts = app.isPackaged ? prodOptions : devOptions
-  const { statusEmitter, shutdown } = await initAgent(app, opts, BINARY_PATHS)
-  statusEmitter.on(STATUS_EVENT, (state: StateSignal) => {
-    switch (state) {
-      case StateSignal.IsReady:
-        // important that this line comes before the next one
-        // otherwise this triggers the 'all-windows-closed'
-        // event
-        createMainWindow()
-        splashWindow.close()
-        break
-      default:
-        splashWindow.webContents.send('status', stateSignalToText(state))
-    }
+  // start up the wiki-server
+
+  // define config
+  let config = {
+      port: 3000,
+      root: path.dirname(require.resolve('wiki-server')),
+      home: 'welcome-visitors',
+      security_type: './security',
+      security_legacy: true,
+      data: app.getAppPath(),
+      packageDir: path.resolve(path.join(__dirname, '..', 'node_modules')),
+      cookieSecret: require('crypto').randomBytes(64).toString('hex'),
+  }
+  let wikiapp = server(config)
+  wikiapp.on('owner-set', (e) => {
+    let server = new http.Server(wikiapp)
+    let serv = server.listen(wikiapp.startOpts.port, wikiapp.startOpts.host)
+    console.log("Federated Wiki server listening on", wikiapp.startOpts.port, "in mode:", wikiapp.settings.env)
+    // if argv.security_type is './security'
+    // console.log 'INFORMATION : Using default security - Wiki will be read-only\n'
+    wikiapp.emit('running-serv', serv)
   })
+
+  createMainWindow()
 })
 
 // Quit when all windows are closed, except on macOS. There, it's common

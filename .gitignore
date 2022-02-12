@@ -4,6 +4,8 @@ out/
 user2-data
 user-data
 electron/web
+electron/pages
+electron/status
 
 dna/workdir/*.dna
 
