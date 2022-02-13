@@ -15,11 +15,10 @@ import * as server from 'wiki-server'
 
 const BACKGROUND_COLOR = '#fbf9f7'
 
-const MAIN_FILE = path.join(__dirname, '../web/index.html')
-// const LINUX_ICON_FILE = path.join(
-//   __dirname,
-//   '../web/logo/acorn-logo-desktop-512px.png'
-// )
+const LINUX_ICON_FILE = path.join(
+  __dirname,
+  '../web/logo/icon.png'
+)
 
 const UI_URL = 'http://localhost:3400'
 
@@ -37,9 +36,9 @@ const createMainWindow = (): BrowserWindow => {
       nodeIntegration: false,
     },
   }
-  // if (process.platform === 'linux') {
-  //   options.icon = LINUX_ICON_FILE
-  // }
+  if (process.platform === 'linux') {
+    options.icon = LINUX_ICON_FILE
+  }
   const mainWindow = new BrowserWindow(options)
   mainWindow.loadURL(UI_URL)
 
