@@ -4,7 +4,7 @@ __Table of Contents__
 - [Set Up after Clone](#set-up-after-clone)
   - [App Icon Images](#app-icon-images)
 - [Run Locally and Develop on your Computer](#run-locally-and-develop-on-your-computer)
-- [Building / Packaging](#building--packaging)
+- [Building / Packaging & Releasing (New Versions)](#building--packaging--releasing-new-versions)
 
 ## Set Up after Clone
 
@@ -46,7 +46,7 @@ Run `npm run electron`
 - `npm run electron-tsc` (**needs to be re-run whenever electron folder source code changes**)
 - `npm run electron`
 
-## Building / Packaging
+## Building / Packaging & Releasing (New Versions)
 
 To build:
 
