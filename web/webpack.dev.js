@@ -3,7 +3,6 @@ const ReactRefreshTypeScript = require('react-refresh-typescript')
 const fs = require('fs')
 const path = require('path')
 const webpack = require('webpack')
-const mainAppId = fs.readFileSync(path.join(__dirname, '../config-main-app-id'), 'utf-8')
 
 // const isDevelopment = true
 module.exports = {
@@ -13,7 +12,6 @@ module.exports = {
     new webpack.HotModuleReplacementPlugin(),
     new ReactRefreshWebpackPlugin(),
     new webpack.DefinePlugin({
-      __MAIN_APP_ID__: JSON.stringify(mainAppId),
       __ADMIN_PORT__: process.env.ADMIN_WS_PORT,
       __APP_PORT__: process.env.APP_WS_PORT,
     }),
