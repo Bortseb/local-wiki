@@ -1,6 +1,4 @@
-# Your Project Name Here
-
-This template gives you only what you need to get up and running with a new project that uses electron and holochain!
+# Fedwiki Packaged as a standalone app (via Electron)
 
 __Table of Contents__
 - [Set Up after Clone](#set-up-after-clone)
@@ -10,10 +8,7 @@ __Table of Contents__
 
 ## Set Up after Clone
 
-Global find and replace:
-
-`LocalWiki`: replace with the actual name you wish to see appear in users desktop launcher icons: e.g. "Acorn"
-
+TODO: Global find and replace:
 `com.some-domain-name.app-name`: replace with an Apple ["bundle Id"](https://developer.apple.com/documentation/appstoreconnectapi/bundle_ids) that is registered on your Apple Developer account
 
 ### App Icon Images
