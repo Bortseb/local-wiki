@@ -1,17 +1,11 @@
 # Fedwiki Packaged as a standalone app (via Electron)
 
 __Table of Contents__
-- [Set Up after Clone](#set-up-after-clone)
-  - [App Icon Images](#app-icon-images)
+- [App Icon Images](#app-icon-images)
 - [Run Locally and Develop on your Computer](#run-locally-and-develop-on-your-computer)
 - [Building / Packaging & Releasing (New Versions)](#building--packaging--releasing-new-versions)
 
-## Set Up after Clone
-
-TODO: Global find and replace:
-`com.some-domain-name.app-name`: replace with an Apple ["bundle Id"](https://developer.apple.com/documentation/appstoreconnectapi/bundle_ids) that is registered on your Apple Developer account
-
-### App Icon Images
+## App Icon Images
 
 Replace `electron/build/icon.icns`. This one is utilized by MacOS.
 
@@ -66,4 +60,7 @@ In order to get cross-platform builds, just tag your repository like `v0.0.1` an
 > The first two should be set as equivalents of `MACOS_CERTIFICATE` = `APPLE_CERTIFICATE_BASE64` and `MACOS_CERTIFICATE_PWD` = `APPLE_CERTIFICATE_PASS` as found in the following article, which also provides other instruction regarding this: https://localazy.com/blog/how-to-automatically-sign-macos-apps-using-github-actions
 >
 > There is a sixth environment variable which is useful to set, like this: `DEBUG: electron-osx-sign*,electron-notarize*`. This allows for useful logging outputs from the signing and notarizing process. This env var is set automatically when running on CI, in the "Release" Github Action.
+
+TODO: Global find and replace:
+`com.some-domain-name.app-name`: replace with an Apple ["bundle Id"](https://developer.apple.com/documentation/appstoreconnectapi/bundle_ids) that is registered on your Apple Developer account
 
