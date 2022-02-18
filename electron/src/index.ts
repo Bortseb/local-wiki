@@ -1,9 +1,13 @@
+require('coffeescript');
+require('coffeescript/register')
 import { app, BrowserWindow, shell } from 'electron'
 import * as path from 'path'
 
 import * as http from 'http'
 // import wiki-server
-import * as server from 'wiki-server'
+// import * as server from 'wiki-server'
+const farm = require('wiki/farm')
+
 
 // import log from 'electron-log'
 
@@ -70,20 +74,21 @@ app.on('ready', async () => {
       root: path.dirname(require.resolve('wiki-server')),
       home: 'welcome-visitors',
       // security_type: './security',
-      security_legacy: true,
+      security_legacy: true, //grants all access to anyone using local device
       data: userDataPath,
       packageDir: path.resolve(path.join(__dirname, '..', 'node_modules')),
       cookieSecret: require('crypto').randomBytes(64).toString('hex'),
   }
-  let wikiapp = server(config)
-  wikiapp.on('owner-set', (e) => {
-    let server = new http.Server(wikiapp)
-    let serv = server.listen(wikiapp.startOpts.port, wikiapp.startOpts.host)
-    console.log("Federated Wiki server listening on", wikiapp.startOpts.port, "in mode:", wikiapp.settings.env)
-    // if argv.security_type is './security'
-    // console.log 'INFORMATION : Using default security - Wiki will be read-only\n'
-    wikiapp.emit('running-serv', serv)
-  })
+  farm(config)
+  // let wikiapp = server(config)
+  // wikiapp.on('owner-set', (e) => {
+  //   let server = new http.Server(wikiapp)
+  //   let serv = server.listen(wikiapp.startOpts.port, wikiapp.startOpts.host)
+  //   console.log("Federated Wiki server listening on", wikiapp.startOpts.port, "in mode:", wikiapp.settings.env)
+  //   // if argv.security_type is './security'
+  //   // console.log 'INFORMATION : Using default security - Wiki will be read-only\n'
+  //   wikiapp.emit('running-serv', serv)
+  // })
 
   createMainWindow()
 })
