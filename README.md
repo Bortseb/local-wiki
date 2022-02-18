@@ -17,8 +17,7 @@ Replace `web/dist/logo/icon.png`. This one is utilized by Linux.
 
 _Prerequisites_
 
-- Have rust language (stable) installed on your system
-- Have nodejs version 14 installed on your system
+- Have nodejs version 14 or 16 installed on your system
 
 Then run
 
