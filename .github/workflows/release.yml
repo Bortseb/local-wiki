@@ -54,16 +54,16 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          gh release upload "${GITHUB_REF#refs/tags/}" "electron/out/LocalWiki-0.0.3.AppImage" --clobber
+          gh release upload "${GITHUB_REF#refs/tags/}" "electron/out/LocalWiki-0.0.4.AppImage" --clobber
       - name: upload binary (macos only)
         if: ${{ runner.os == 'macOs' }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          gh release upload "${GITHUB_REF#refs/tags/}" "electron/out/LocalWiki-0.0.3.dmg" --clobber
+          gh release upload "${GITHUB_REF#refs/tags/}" "electron/out/LocalWiki-0.0.4.dmg" --clobber
       - name: upload binary (Windows only)
         if: ${{ runner.os == 'Windows' }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          gh release upload "$($env:GITHUB_REF -replace "refs/tags/")" "electron/out/LocalWiki.Setup.0.0.3.exe" --clobber
+          gh release upload "$($env:GITHUB_REF -replace "refs/tags/")" "electron/out/LocalWiki.Setup.0.0.4.exe" --clobber
