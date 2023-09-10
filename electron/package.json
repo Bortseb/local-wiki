@@ -1,6 +1,6 @@
 {
   "name": "local-wiki",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Electron application description goes here",
   "main": "dist/index.js",
   "scripts": {
@@ -51,6 +51,6 @@
     "electron-log": "^4.3.5",
     "electron-notarize": "^1.0.0",
     "split": "^1.0.1",
-    "wiki": "0.27.0"
+    "wiki": "0.31.0"
   }
 }
