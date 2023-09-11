@@ -1,6 +1,6 @@
 {
   "name": "local-wiki",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "This repository helps get started with electron and holochain",
   "repository": {
     "type": "git",
